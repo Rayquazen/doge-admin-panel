@@ -1,0 +1,23 @@
+"use client";
+
+import { JSX, useState } from "react";
+import MenuSelections from "@/components/menuSelectors";
+import { CreateCourse } from "@/components/CreateCourse";
+
+export function Workspace() {
+	const [selectedComponent, setSelectedComponent] = useState<JSX.Element>(
+		<CreateCourse />
+	);
+	return (
+		<div className="flex flex-col items-center justify-center  min-h-screen bg-[#FFF2E1] p-8  font-[family-name:var(--font-geist-sans)]">
+			<div className="w-full h-[63rem] bg-[#EAD8C0] rounded shadow flex flex-row justify-between p-8">
+				<div className="w-1/5 h-full bg-gray rounded shadow flex flex-col justify-center p-8">
+					<MenuSelections onComponentSelect={setSelectedComponent} />
+				</div>
+				<div className="w-full h-full rounded shadow flex flex-col justify-center items-center p-2">
+					{selectedComponent}
+				</div>
+			</div>
+		</div>
+	);
+}
