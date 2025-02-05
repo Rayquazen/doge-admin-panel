@@ -11,7 +11,7 @@ export function Login() {
 	const submit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		router.push("/adminPanel");
+		router.push("/adminPanel"); // убрать отсюда после подключения бэка
 
 		// // Апишка с env
 		// const apiUrl = "ourAPI";
@@ -36,10 +36,10 @@ export function Login() {
 	};
 
 	return (
-		<div className="flex flex-col items-center justify-center  min-h-screen bg-[#FFF2E1] p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+		<div className="flex flex-col items-center justify-center text-lg min-h-screen bg-[#FFF2E1] p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
 			<div
 				id="login"
-				className="w-80 h-96 bg-[#EAD8C0] rounded shadow flex flex-col justify-between p-3"
+				className="w-1/4 h-[30rem] bg-[#EAD8C0] rounded shadow flex flex-col  p-3"
 			>
 				<form
 					className="text-[#A79277]"
@@ -47,39 +47,34 @@ export function Login() {
 					method="post"
 					onSubmit={submit}
 				>
-					<fieldset className="border-4 border-dotted border-[#A79277] p-5">
+					<fieldset className="border-4 border-dotted border-[#A79277] p-7">
 						<legend className="px-2 italic -mx-2">Welcome again!</legend>
 						<label
-							className="text-xs font-bold after:content-['*'] after:text-red-400"
+							className="text-base font-bold after:content-['*'] after:text-red-400"
 							htmlFor="email"
 						>
 							Mail{" "}
 						</label>
 						<input
-							className="w-full p-2 mb-4 mt-1 outline-none ring-none focus:ring-2 focus:ring-indigo-500"
+							className="w-full p-2 mb-10 mt-1 outline-none ring-none focus:ring-2 focus:ring-indigo-500"
 							type="email"
 							onChange={(e) => setEmail(e.target.value)}
 							required
 						/>
 						<label
-							className="text-xs font-bold after:content-['*'] after:text-red-400"
+							className="text-base font-bold after:content-['*'] after:text-red-400"
 							htmlFor="password"
 						>
 							Password{" "}
 						</label>
 						<input
-							className="w-full p-2 mb-4 mt-1 outline-none ring-none focus:ring-2 focus:ring-indigo-500"
+							className="w-full p-2 mb-10 mt-1 outline-none ring-none focus:ring-2 focus:ring-indigo-500"
 							type="password"
 							onChange={(e) => setPassword(e.target.value)}
 							required
 						/>
-						<a
-							href="#"
-							className="block text-right text-xs text-indigo-500 text-right mb-12"
-						>
-							Forgot Password?
-						</a>
-						<button className="w-full rounded bg-[#A79277] text-indigo-50 p-3 text-center font-bold hover:bg-[#D1BB9E]">
+
+						<button className="w-full mt-20 rounded bg-[#A79277] text-indigo-50 p-3 text-center font-bold hover:bg-[#D1BB9E]">
 							Log In
 						</button>
 					</fieldset>

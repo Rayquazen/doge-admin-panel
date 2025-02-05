@@ -124,7 +124,6 @@ export function CreateCourse() {
 				/>
 			</div>
 
-			{/* Кнопка подтверждения */}
 			<button
 				type="submit"
 				disabled={loading}
@@ -133,7 +132,6 @@ export function CreateCourse() {
 				{loading ? "Создание..." : "Подтвердить создание"}
 			</button>
 
-			{/* Уведомления */}
 			{success && <p className="text-green-600">Курс успешно создан!</p>}
 			{error && <p className="text-red-600">{error}</p>}
 		</form>

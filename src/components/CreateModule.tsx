@@ -12,11 +12,7 @@ export function CreateModule() {
 	const [moduleName, setModuleName] = useState("");
 	const [moduleDescription, setModuleDescription] = useState("");
 	const [loading, setLoading] = useState(true);
-	const [courses, setCourses] = useState<Course[]>([
-		{ id: "1", name: "Курс 1" },
-		{ id: "2", name: "Курс 2" },
-		{ id: "3", name: "Курс 3" },
-	]);
+	const [courses, setCourses] = useState<Course[]>([]);
 	const [saving, setSaving] = useState(false); // Для состояния сохранения
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState(false);
@@ -105,7 +101,7 @@ export function CreateModule() {
 					value={moduleDescription}
 					onChange={(e) => setModuleDescription(e.target.value)}
 					rows={6}
-					className="mt-2 block w-[60rem] rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 text-black text-lg"
+					className="mt-2 block w-[60rem] rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 text-black text-lg scale-none resize-none"
 				/>
 			</div>
 
