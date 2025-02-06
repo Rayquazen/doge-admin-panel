@@ -1,11 +1,10 @@
 "use client";
 
 import { JSX, useState } from "react";
-import { CreateCourse } from "./CreateCourse";
-import { CreateModule } from "./CreateModule";
-import { CreateLesson } from "./CreateLesson";
-
-type Tab = "Создать курс" | "Создать модуль" | "Создать урок";
+import { CreateCourse } from "@/components/CreateCourse";
+import { CreateModule } from "@/components/CreateModule";
+import { CreateLesson } from "@/components/CreateLesson";
+import { Tab } from "@/utils/types";
 
 interface MenuSelectionsProps {
 	onComponentSelect: (component: JSX.Element) => void;
