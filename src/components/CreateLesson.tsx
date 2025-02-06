@@ -43,8 +43,8 @@ export function CreateLesson() {
 		setEditorState(state);
 	};
 	return (
-		<div className="w-full h-[42rem] 2xl:h-[56rem] divide-y-2 divide-dashed divide-gray-500 rounded flex flex-col  ">
-			<div className=" w-full h-1/4  flex flex-row justify-center items-center ">
+		<div className="w-full h-[42rem] 2xl:h-[57rem] divide-y-2 divide-dashed divide-gray-500 rounded flex flex-col  ">
+			<div className=" w-full h-1/5  flex flex-row justify-center items-center ">
 				<div className=" w-1/2 h-full  flex flex-col justify-center items-center ">
 					<h2 className="text-2xl font-bold text-black mb-2">
 						Создание урока c модулем
@@ -125,8 +125,8 @@ export function CreateLesson() {
 					</div>
 				</div>
 			</div>
-			<div className="w-full h-3/4 rounded flex flex-col items-center  max-h-[30rem] ">
-				<div className="w-full h-[5rem] flex flex-row justify-center items-center  gap-10">
+			<div className="w-full h-4/5 rounded flex flex-col items-center ">
+				<div className="w-full min-h-[4rem] flex flex-row justify-center items-center  gap-10">
 					<button
 						onClick={() => addContent("text")}
 						className="w-1/6 rounded bg-[#A79277] text-black p-2 font-bold hover:bg-[#D1BB9E]"
@@ -148,7 +148,7 @@ export function CreateLesson() {
 				</div>
 
 				{/* Динамический контент */}
-				<div className="w-full flex flex-col items-center  overflow-y-auto p-4 ]">
+				<div className="w-full flex flex-col items-center overflow-y-auto  ">
 					{content.map((block) => (
 						<div
 							key={block.id}
