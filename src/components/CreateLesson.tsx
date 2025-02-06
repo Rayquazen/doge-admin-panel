@@ -43,16 +43,16 @@ export function CreateLesson() {
 		setEditorState(state);
 	};
 	return (
-		<div className="w-full max-h-[62rem] min-h-[62rem] divide-y-2 divide-dashed divide-gray-500 rounded flex flex-col text-lg ">
-			<div className=" w-full h-1/4  flex flex-row justify-center items-center text-lg">
-				<div className=" w-1/2 h-full  flex flex-col justify-center items-center gap-3 text-lg">
-					<h2 className="text-2xl font-bold text-black">
+		<div className="w-full h-[42rem] 2xl:h-[56rem] divide-y-2 divide-dashed divide-gray-500 rounded flex flex-col  ">
+			<div className=" w-full h-1/4  flex flex-row justify-center items-center ">
+				<div className=" w-1/2 h-full  flex flex-col justify-center items-center ">
+					<h2 className="text-2xl font-bold text-black mb-2">
 						Создание урока c модулем
 					</h2>
 					<div>
 						<label
 							htmlFor="courseName"
-							className="block text-gray-800 font-semibold"
+							className="block text-gray-800 font-semibold text-sm"
 						>
 							Выберите курс
 						</label>
@@ -60,7 +60,7 @@ export function CreateLesson() {
 							id="module"
 							value={selectedOption}
 							onChange={(e) => setSelectedOption(e.target.value)}
-							className="mt-2 block w-[40rem] rounded-md py-2 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
+							className="mt-1 block 2xl:w-[40rem] w-[20rem] rounded-md py-1 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
 						>
 							<option value="" disabled>
 								{loading ? "Загрузка модулей..." : "Выберите модуль"}
@@ -75,7 +75,7 @@ export function CreateLesson() {
 					<div>
 						<label
 							htmlFor="module"
-							className="block text-gray-800 font-semibold text-lg"
+							className="block text-gray-800 font-semibold text-sm mt-1"
 						>
 							Выберите модуль
 						</label>
@@ -83,7 +83,7 @@ export function CreateLesson() {
 							id="module"
 							value={selectedOption}
 							onChange={(e) => setSelectedOption(e.target.value)}
-							className="mt-2 block w-[40rem] rounded-md py-2 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
+							className="mt-1 block 2xl:w-[40rem] w-[20rem] rounded-md py-1 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
 						>
 							<option value="" disabled>
 								{loading ? "Загрузка модулей..." : "Выберите модуль"}
@@ -96,7 +96,7 @@ export function CreateLesson() {
 						</select>
 					</div>
 				</div>
-				<div className=" w-1/2 h-full flex flex-col justify-center items-center gap-10 text-lg">
+				<div className=" w-1/2 h-full flex flex-col justify-center items-center gap-5 ">
 					<h2 className="text-2xl font-bold text-black">
 						Создание урока без модуля
 					</h2>
@@ -111,7 +111,7 @@ export function CreateLesson() {
 							id="module"
 							value={selectedOption}
 							onChange={(e) => setSelectedOption(e.target.value)}
-							className="mt-2 block w-[40rem] rounded-md py-2 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
+							className="mt-1 block 2lg:w-[40rem] w-[20rem] rounded-md py-1 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
 						>
 							<option value="" disabled>
 								{loading ? "Загрузка модулей..." : "Выберите модуль"}
@@ -125,8 +125,8 @@ export function CreateLesson() {
 					</div>
 				</div>
 			</div>
-			<div className="w-full h-3/4 rounded flex flex-col items-center text-lg ">
-				<div className="w-full h-[5rem] flex flex-row justify-center items-center text-lg gap-10">
+			<div className="w-full h-3/4 rounded flex flex-col items-center  max-h-[30rem] ">
+				<div className="w-full h-[5rem] flex flex-row justify-center items-center  gap-10">
 					<button
 						onClick={() => addContent("text")}
 						className="w-1/6 rounded bg-[#A79277] text-black p-2 font-bold hover:bg-[#D1BB9E]"
@@ -148,7 +148,7 @@ export function CreateLesson() {
 				</div>
 
 				{/* Динамический контент */}
-				<div className="w-full flex flex-col items-center text-lg overflow-y-auto p-4">
+				<div className="w-full flex flex-col items-center  overflow-y-auto p-4 ]">
 					{content.map((block) => (
 						<div
 							key={block.id}
@@ -165,7 +165,7 @@ export function CreateLesson() {
 							{/* Компоненты в зависимости от типа */}
 							{block.type === "text" && (
 								<div>
-									<label className="block text-gray-800 font-semibold text-lg">
+									<label className="block text-gray-800 font-semibold ">
 										Описание курса
 									</label>
 									<Editor
