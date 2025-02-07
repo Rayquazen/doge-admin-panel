@@ -1,18 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-
-interface Course {
-	id: string;
-	name: string;
-}
+import { course } from "@/utils/types";
 
 export function CreateModule() {
 	const [selectedOption, setSelectedOption] = useState("");
 	const [moduleName, setModuleName] = useState("");
 	const [moduleDescription, setModuleDescription] = useState("");
 	const [loading, setLoading] = useState(true);
-	const [courses, setCourses] = useState<Course[]>([]);
+	const [courses, setCourses] = useState<course[]>([
+		{ id: 1, name: "Дрессировка собак" },
+	]);
 	const [saving, setSaving] = useState(false); // Для состояния сохранения
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState(false);
@@ -23,7 +21,7 @@ export function CreateModule() {
 				const response = await fetch("/api/courses");
 				if (!response.ok) throw new Error("Ошибка загрузки курсов");
 
-				const data: Course[] = await response.json();
+				const data: course[] = await response.json();
 				setCourses(data);
 			} catch (error) {
 				console.error("Ошибка:", error);

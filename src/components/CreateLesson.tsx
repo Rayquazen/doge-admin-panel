@@ -7,7 +7,7 @@ import { module, course } from "@/utils/types";
 export function CreateLesson() {
 	const [courses, setCourses] = useState<course[]>([]);
 	const [modules, setModules] = useState<module[]>([
-		{ id: 1, name: "модуль 1" },
+		{ id: 1, name: "Занятия дома" },
 		{ id: 2, name: "модуль 2" },
 		{ id: 3, name: "модуль 3" },
 	]);
@@ -32,63 +32,67 @@ export function CreateLesson() {
 
 	return (
 		<div className="w-full h-[42rem] 2xl:h-[55rem] divide-y-2 divide-dashed divide-gray-500 rounded flex flex-col">
-			<div className="w-full h-1/5 flex flex-row justify-center items-center">
+			<div className="w-full h-1/6 flex flex-row justify-center items-center">
 				{/* Левая колонка */}
 				<div className="w-1/2 h-full flex flex-col items-center">
 					<h2 className="text-2xl font-bold text-black mb-2">
 						Создание урока с модулем
 					</h2>
-					<div>
-						<label
-							htmlFor="module1"
-							className="block text-gray-800 font-semibold text-sm"
-						>
-							Выберите курс
-						</label>
-						<select
-							id="module1"
-							value={selectedOption1}
-							onChange={handleSelect1}
-							className="mt-1 block w-[30rem] rounded-md py-1 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
-						>
-							<option value="" disabled>
-								{loading ? "Загрузка модулей..." : "Выберите модуль"}
-							</option>
-							{modules.map((module) => (
-								<option
-									key={module.id}
-									value={module.id}
-									disabled={!!selectedOption2} // Блокируем, если выбран модуль в правой части
-								>
-									{module.name}
+					<div className="flex flex-row gap-5">
+						<div>
+							<label
+								htmlFor="module1"
+								className="block text-gray-800 font-semibold text-sm"
+							>
+								Выберите курс
+							</label>
+							<select
+								id="module1"
+								value={selectedOption1}
+								onChange={handleSelect1}
+								className="mt-1 block w-[22rem] rounded-md py-1 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
+							>
+								<option value="" disabled>
+									{loading ? "Загрузка модулей..." : "Выберите модуль"}
 								</option>
-							))}
-						</select>
-						<label
-							htmlFor="module1"
-							className="block text-gray-800 font-semibold text-sm"
-						>
-							Выберите модуль
-						</label>
-						<select
-							id="module1"
-							value={selectedOption1}
-							onChange={handleSelect1}
-							className="mt-1 block w-[30rem] rounded-md py-1 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
-						>
-							<option value="" disabled>
-								{loading ? "Загрузка модулей..." : "Выберите модуль"}
-							</option>
-							{modules.map((module) => (
-								<option
-									key={module.id}
-									value={module.id}
-									disabled={!!selectedOption2} // Блокируем, если выбран модуль в правой части
-								>
-									{module.name}
+								{modules.map((module) => (
+									<option
+										key={module.id}
+										value={module.id}
+										disabled={!!selectedOption2} // Блокируем, если выбран модуль в правой части
+									>
+										{module.name}
+									</option>
+								))}
+							</select>
+						</div>
+						<div>
+							<label
+								htmlFor="module1"
+								className="block text-gray-800 font-semibold text-sm"
+							>
+								Выберите модуль
+							</label>
+							<select
+								id="module1"
+								value={selectedOption1}
+								onChange={handleSelect1}
+								className="mt-1 block w-[22rem] rounded-md py-1 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
+							>
+								<option value="" disabled>
+									{loading ? "Загрузка модулей..." : "Выберите модуль"}
 								</option>
-							))}
-						</select>
+								{modules.map((module) => (
+									<option
+										key={module.id}
+										value={module.id}
+										disabled={!!selectedOption2} // Блокируем, если выбран модуль в правой части
+									>
+										{module.name}
+									</option>
+								))}
+							</select>
+						</div>
 					</div>
 				</div>
 

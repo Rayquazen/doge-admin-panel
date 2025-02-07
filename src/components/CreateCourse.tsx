@@ -84,7 +84,7 @@ export function CreateCourse() {
 					value={courseDescription}
 					onChange={(e) => setCourseDescription(e.target.value)}
 					rows={6}
-					className="mt-2 block w-[60rem] rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 text-black text-lg"
+					className="mt-2 block w-[60rem] rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 text-black text-lg resize-none"
 					required
 				/>
 			</div>

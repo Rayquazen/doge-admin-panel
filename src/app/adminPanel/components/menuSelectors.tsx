@@ -5,6 +5,7 @@ import { CreateCourse } from "@/components/CreateCourse";
 import { CreateModule } from "@/components/CreateModule";
 import { CreateLesson } from "@/components/CreateLesson";
 import { Tab } from "@/utils/types";
+import { ListAllContent } from "@/components/ListAllContent";
 
 interface MenuSelectionsProps {
 	onComponentSelect: (component: JSX.Element) => void;
@@ -47,6 +48,18 @@ export default function MenuSelections({
 				}`}
 			>
 				Создать урок
+			</button>
+			<button
+				onClick={() =>
+					handleSelect(<ListAllContent />, "Список всех материалов")
+				}
+				className={`flex justify-center p-3 text-left rounded text-black font-mono text-lg ${
+					activeSection === "Список всех материалов"
+						? "bg-[#A79277] "
+						: "bg-[#D1BB9E]"
+				}`}
+			>
+				Список все материалов
 			</button>
 		</nav>
 	);
