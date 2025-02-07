@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AllContent } from "@/utils/types";
 
 export function ListAllContent() {
+	const [loading, setLoading] = useState(true);
 	const [content, setContent] = useState<AllContent[]>([
 		{
 			id: 1,
@@ -27,6 +28,24 @@ export function ListAllContent() {
 			price: 3000,
 		},
 	]);
+
+	useEffect(() => {
+		async function fetchContent() {
+			try {
+				const host = process.env.NEXT_PUBLIC_API_URL;
+				const response = await fetch(`${host}/api/courses`);
+
+				if (!response.ok) throw new Error("Ошибка загрузки контента");
+
+				const data: AllContent[] = await response.json();
+				setContent(data);
+			} catch (error) {
+				console.error("Ошибка:", error);
+			} finally {
+				setLoading(false);
+			}
+		}
+	});
 
 	const handleDelete = (id: number) => async () => {
 		try {
