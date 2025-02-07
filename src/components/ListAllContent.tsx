@@ -45,7 +45,8 @@ export function ListAllContent() {
 				setLoading(false);
 			}
 		}
-	});
+		fetchContent();
+	}, []);
 
 	const handleDelete = (id: number) => async () => {
 		try {
