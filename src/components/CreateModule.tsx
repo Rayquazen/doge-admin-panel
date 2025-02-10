@@ -68,14 +68,14 @@ export function CreateModule() {
 	};
 
 	return (
-		<div className="w-full h-[63rem] rounded flex flex-col justify-center items-center gap-10 text-lg">
+		<div className="w-full h-[63rem] rounded flex flex-col justify-center items-center gap-10 text-md">
 			{/* Название модуля */}
 			<div>
 				<label
 					htmlFor="moduleName"
 					className="block text-gray-800 font-semibold"
 				>
-					Название Модуля
+					Название модуля
 				</label>
 				<input
 					type="text"
@@ -92,14 +92,14 @@ export function CreateModule() {
 					htmlFor="moduleDescription"
 					className="block text-gray-800 font-semibold"
 				>
-					Описание Модуля
+					Описание модуля
 				</label>
 				<textarea
 					id="moduleDescription"
 					value={moduleDescription}
 					onChange={(e) => setModuleDescription(e.target.value)}
 					rows={6}
-					className="mt-2 block w-[60rem] rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 text-black text-lg scale-none resize-none"
+					className="mt-2 block w-[60rem] rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 text-black text-md scale-none resize-none"
 				/>
 			</div>
 
@@ -107,7 +107,7 @@ export function CreateModule() {
 			<div>
 				<label
 					htmlFor="course"
-					className="block text-gray-800 font-semibold text-lg"
+					className="block text-gray-800 font-semibold text-md"
 				>
 					Выберите курс
 				</label>

@@ -38,12 +38,12 @@ export function LessonConstructor() {
 	};
 
 	return (
-		<div className="w-full h-5/6 rounded flex flex-col items-center">
+		<div className="w-full h-5/6 rounded flex flex-col items-center ">
 			<div className="w-full  flex flex-row justify-between items-center">
 				<div className="flex flex-col w-1/2 items-center">
 					<label
 						htmlFor="lessonName"
-						className="block text-gray-800 font-semibold"
+						className="block text-gray-800 font-semibold "
 					>
 						Название Урока
 					</label>
@@ -81,7 +81,7 @@ export function LessonConstructor() {
 						key={block.id}
 						className="relative w-[60rem] bg-gray-100 p-1.5 rounded-lg mt-4 shadow-md"
 					>
-						<div className="absolute top-0 right-0 flex gap-2">
+						<div className="absolute top-0 right-0 flex gap-2 z-10">
 							<button
 								onClick={() => moveContent(index, "up")}
 								disabled={index === 0}
@@ -103,23 +103,34 @@ export function LessonConstructor() {
 								✕
 							</button>
 						</div>
+						<div className="z-5">
+							{/* Компоненты */}
+							{block.type === "text" && block.editorState && (
+								<TextEditor
+									editorState={block.editorState}
+									setEditorState={(newState) => {
+										const newContent = [...content];
+										newContent[index] = { ...block, editorState: newState };
+										setContent(newContent);
+									}}
+								/>
+							)}
 
-						{/* Компоненты */}
-						{block.type === "text" && block.editorState && (
-							<TextEditor
-								editorState={block.editorState}
-								setEditorState={(newState) => {
-									const newContent = [...content];
-									newContent[index] = { ...block, editorState: newState };
-									setContent(newContent);
-								}}
-							/>
-						)}
-
-						{block.type === "image" && <ImageUploader />}
-						{block.type === "video" && <VideoUploader />}
+							{block.type === "image" && <ImageUploader />}
+							{block.type === "video" && <VideoUploader />}
+						</div>
 					</div>
 				))}
+				{content.length > 0 && (
+					<div className="w-full flex justify-center gap-20 mt-5">
+						<button className="w-2/6 rounded bg-[#A79277] text-black p-2 font-bold hover:bg-[#D1BB9E]">
+							Сохранить Урок
+						</button>
+						<button className="w-2/6 rounded bg-[#A79277] text-black p-2 font-bold hover:bg-[#D1BB9E]">
+							Отменить
+						</button>
+					</div>
+				)}
 			</div>
 		</div>
 	);

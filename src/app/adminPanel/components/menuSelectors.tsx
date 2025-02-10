@@ -25,7 +25,7 @@ export default function MenuSelections({
 		<nav className="flex flex-col space-y-2 gap-10 font-bold">
 			<button
 				onClick={() => handleSelect(<CreateCourse />, "Создать курс")}
-				className={` flex justify-center p-3 text-left rounded text-black font-mono text-lg  ${
+				className={` flex justify-center p-3  rounded text-black font-mono text-lg  ${
 					activeSection === "Создать курс" ? "bg-[#A79277] " : "bg-[#D1BB9E]"
 				}`}
 			>
@@ -34,7 +34,7 @@ export default function MenuSelections({
 
 			<button
 				onClick={() => handleSelect(<CreateModule />, "Создать модуль")}
-				className={` flex justify-center p-3 text-left rounded text-black font-mono text-lg ${
+				className={` flex justify-center p-3  rounded text-black font-mono text-lg ${
 					activeSection === "Создать модуль" ? "bg-[#A79277] " : "bg-[#D1BB9E]"
 				}`}
 			>
@@ -43,7 +43,7 @@ export default function MenuSelections({
 
 			<button
 				onClick={() => handleSelect(<CreateLesson />, "Создать урок")}
-				className={`flex justify-center p-3 text-left rounded text-black font-mono text-lg ${
+				className={`flex justify-center p-3  rounded text-black font-mono text-lg ${
 					activeSection === "Создать урок" ? "bg-[#A79277] " : "bg-[#D1BB9E]"
 				}`}
 			>
@@ -53,13 +53,13 @@ export default function MenuSelections({
 				onClick={() =>
 					handleSelect(<ListAllContent />, "Список всех материалов")
 				}
-				className={`flex justify-center p-3 text-left rounded text-black font-mono text-lg ${
+				className={`flex justify-center p-3  rounded text-black font-mono text-lg ${
 					activeSection === "Список всех материалов"
 						? "bg-[#A79277] "
 						: "bg-[#D1BB9E]"
 				}`}
 			>
-				Список все материалов
+				Список всех материалов
 			</button>
 		</nav>
 	);

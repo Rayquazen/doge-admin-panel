@@ -31,7 +31,7 @@ export function CreateLesson() {
 	};
 
 	return (
-		<div className="w-full h-[42rem] 2xl:h-[55rem] divide-y-2 divide-dashed divide-gray-500 rounded flex flex-col">
+		<div className="w-full h-[42rem] 2xl:h-[55rem] divide-y-2 divide-dashed divide-gray-500 rounded flex flex-col ">
 			<div className="w-full h-1/6 flex flex-row justify-center items-center">
 				{/* Левая колонка */}
 				<div className="w-1/2 h-full flex flex-col items-center">
@@ -42,7 +42,7 @@ export function CreateLesson() {
 						<div>
 							<label
 								htmlFor="module1"
-								className="block text-gray-800 font-semibold text-sm"
+								className="block text-gray-800 font-semibold text-md"
 							>
 								Выберите курс
 							</label>
@@ -69,7 +69,7 @@ export function CreateLesson() {
 						<div>
 							<label
 								htmlFor="module1"
-								className="block text-gray-800 font-semibold text-sm"
+								className="block text-gray-800 font-semibold text-md"
 							>
 								Выберите модуль
 							</label>
