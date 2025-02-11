@@ -2,37 +2,50 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+// import { LoginResponse } from "@/utils/types";
+
+interface LoginResponse {
+	massege: string;
+	access_token: string;
+	refresh_token: string;
+}
 
 export function Login() {
 	const router = useRouter();
-	const [email, setEmail] = useState("");
+	const [userName, setUserName] = useState("");
 	const [password, setPassword] = useState("");
 
 	const submit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		router.push("/adminPanel"); // убрать отсюда после подключения бэка
+		const host = process.env.NEXT_PUBLIC_APP_HOSTNAME;
 
-		// // Апишка с env
-		// const apiUrl = "ourAPI";
+		if (!host) {
+			console.error("Host is not defined");
+			return;
+		}
 
-		// // Проверка на валидность полей (email, password)
-		// // Если нет, показывать ошибки в полях
-		// const response = await fetch(`${apiUrl}/login`, {
-		// 	method: "POST",
-		// 	headers: {
-		// 		"Content-Type": "application/json",
-		// 	},
-		// 	body: JSON.stringify({ email: email, password: password }),
-		// })
-		// 	.then((response) => {
-		// 		if (response.ok) {
-		// 			router.push("/adminPanel");
-		// 		}
-		// 	})
-		// 	.catch((error) => {
-		// 		console.error("An error occurred", error);
-		// 	});
+		const response = await fetch(`${host}/login`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({ login: userName, password: password }),
+		})
+			.then((response) => {
+				if (response.ok) {
+					return response.json() as Promise<LoginResponse>;
+				}
+			})
+			.catch((error) => {
+				console.error("An error occurred", error);
+			});
+
+		if (response) {
+			localStorage.setItem("accessToken", response.access_token);
+			localStorage.setItem("refreshToken", response.refresh_token);
+			router.push("/adminPanel");
+		}
 	};
 
 	return (
@@ -51,15 +64,14 @@ export function Login() {
 						<legend className="px-2 italic -mx-2">Welcome again!</legend>
 						<label
 							className="text-base font-bold after:content-['*'] after:text-red-400"
-							htmlFor="email"
+							htmlFor="userName"
 						>
 							Mail{" "}
 						</label>
 						<input
 							className="w-full p-2 mb-10 mt-1 outline-none ring-none focus:ring-2 focus:ring-indigo-500"
-							type="email"
-							onChange={(e) => setEmail(e.target.value)}
-							required
+							type="userName"
+							onChange={(e) => setUserName(e.target.value)}
 						/>
 						<label
 							className="text-base font-bold after:content-['*'] after:text-red-400"

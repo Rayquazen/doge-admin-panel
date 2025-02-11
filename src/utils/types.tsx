@@ -17,6 +17,7 @@ export interface module {
 export interface course {
 	id: number;
 	name: string;
+	with_modules: boolean;
 }
 
 // Объект контента в конструкторе
@@ -25,6 +26,11 @@ export interface ContentBlock {
 	type: ContentType;
 	value?: string;
 	editorState?: EditorState;
+}
+
+export interface LoginResponse {
+	access_token: string;
+	refresh_token: string;
 }
 
 // Объект получаемых всех материалов

@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { fetchWithAuth } from "@/utils/authService";
 
 export function CreateCourse() {
 	const [courseName, setCourseName] = useState("");
 	const [courseDescription, setCourseDescription] = useState("");
 	const [coursePrice, setCoursePrice] = useState("");
-	const [hasModules, setHasModules] = useState(false);
+	const [withModules, setwithModules] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const [error, setError] = useState<string | null>(null);
@@ -20,16 +21,15 @@ export function CreateCourse() {
 		const courseData = {
 			name: courseName,
 			description: courseDescription,
-			price: parseFloat(coursePrice), // Преобразуем в число
-			hasModules,
+			amount: parseFloat(coursePrice),
+			with_modules: withModules,
 		};
 
 		try {
-			const response = await fetch("/api/courses", {
+			const host = process.env.NEXT_PUBLIC_APP_HOSTNAME;
+
+			const response = await fetchWithAuth(`${host}/admin/courses`, {
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
 				body: JSON.stringify(courseData),
 			});
 
@@ -39,7 +39,7 @@ export function CreateCourse() {
 			setCourseName("");
 			setCourseDescription("");
 			setCoursePrice("");
-			setHasModules(false);
+			setwithModules(false);
 		} catch (error) {
 			setError("Не удалось создать курс");
 			console.error("Ошибка:", error);
@@ -110,16 +110,16 @@ export function CreateCourse() {
 			{/* Наличие модуля */}
 			<div className="flex items-center gap-3">
 				<label
-					htmlFor="hasModules"
+					htmlFor="withModules"
 					className="text-gray-800 font-semibold text-lg"
 				>
 					Наличие модуля
 				</label>
 				<input
-					id="hasModules"
+					id="withModules"
 					type="checkbox"
-					checked={hasModules}
-					onChange={() => setHasModules(!hasModules)}
+					checked={withModules}
+					onChange={() => setwithModules(!withModules)}
 					className="w-7 h-7"
 				/>
 			</div>

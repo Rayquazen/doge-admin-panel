@@ -1,19 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LessonConstructor } from "./LessonConstructor";
 import { module, course } from "@/utils/types";
+import { fetchWithAuth } from "@/utils/authService";
 
 export function CreateLesson() {
 	const [courses, setCourses] = useState<course[]>([]);
-	const [modules, setModules] = useState<module[]>([
-		{ id: 1, name: "Занятия дома" },
-		{ id: 2, name: "модуль 2" },
-		{ id: 3, name: "модуль 3" },
-	]);
+	const [modules, setModules] = useState<module[]>([]);
 	const [selectedOption1, setSelectedOption1] = useState<string | "">("");
 	const [selectedOption2, setSelectedOption2] = useState<string | "">("");
 	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		async function fetchCourses() {
+			try {
+				const host = process.env.NEXT_PUBLIC_APP_HOSTNAME;
+				const response = await fetchWithAuth(`${host}/admin/courses`);
+				if (!response.ok) throw new Error("Ошибка загрузки курсов");
+
+				const data: course[] = await response.json();
+				setCourses(data);
+			} catch (error) {
+				console.error("Ошибка:", error);
+			} finally {
+				setLoading(false);
+			}
+		}
+
+		fetchCourses();
+	}, []);
 
 	// Функции для обработки выбора
 	const handleSelect1 = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -55,15 +71,18 @@ export function CreateLesson() {
 								<option value="" disabled>
 									{loading ? "Загрузка модулей..." : "Выберите модуль"}
 								</option>
-								{modules.map((module) => (
-									<option
-										key={module.id}
-										value={module.id}
-										disabled={!!selectedOption2} // Блокируем, если выбран модуль в правой части
-									>
-										{module.name}
-									</option>
-								))}
+								{courses.map(
+									(courses) =>
+										courses.with_modules && (
+											<option
+												key={courses.id}
+												value={courses.id}
+												disabled={!!selectedOption2} // Блокируем, если выбран модуль в правой части
+											>
+												{courses.name}
+											</option>
+										)
+								)}
 							</select>
 						</div>
 						<div>

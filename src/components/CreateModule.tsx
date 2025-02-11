@@ -2,15 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { course } from "@/utils/types";
+import { fetchWithAuth } from "@/utils/authService";
 
 export function CreateModule() {
 	const [selectedOption, setSelectedOption] = useState("");
 	const [moduleName, setModuleName] = useState("");
 	const [moduleDescription, setModuleDescription] = useState("");
 	const [loading, setLoading] = useState(true);
-	const [courses, setCourses] = useState<course[]>([
-		{ id: 1, name: "Дрессировка собак" },
-	]);
+	const [courses, setCourses] = useState<course[]>([]);
 	const [saving, setSaving] = useState(false); // Для состояния сохранения
 	const [error, setError] = useState<string | null>(null);
 	const [success, setSuccess] = useState(false);
@@ -18,7 +17,8 @@ export function CreateModule() {
 	useEffect(() => {
 		async function fetchCourses() {
 			try {
-				const response = await fetch("/api/courses");
+				const host = process.env.NEXT_PUBLIC_APP_HOSTNAME;
+				const response = await fetchWithAuth(`${host}/admin/courses`);
 				if (!response.ok) throw new Error("Ошибка загрузки курсов");
 
 				const data: course[] = await response.json();
@@ -41,11 +41,12 @@ export function CreateModule() {
 		const moduleData = {
 			name: moduleName,
 			description: moduleDescription,
-			courseId: selectedOption,
+			course_id: parseInt(selectedOption),
 		};
 
 		try {
-			const response = await fetch("/api/modules", {
+			const host = process.env.NEXT_PUBLIC_APP_HOSTNAME;
+			const response = await fetchWithAuth(`${host}/admin/modules`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -120,11 +121,14 @@ export function CreateModule() {
 					<option value="" disabled>
 						{loading ? "Загрузка курсов..." : "Выберите курс"}
 					</option>
-					{courses.map((course) => (
-						<option key={course.id} value={course.id}>
-							{course.name}
-						</option>
-					))}
+					{courses.map(
+						(course) =>
+							course.with_modules && (
+								<option key={course.id} value={course.id}>
+									{course.name}
+								</option>
+							)
+					)}
 				</select>
 			</div>
 
