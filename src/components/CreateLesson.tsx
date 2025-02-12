@@ -21,6 +21,12 @@ export function CreateLesson() {
 
 				const data: course[] = await response.json();
 				setCourses(data);
+
+				const response = await fetchWithAuth(`${host}/admin/modules`);
+				if (!response.ok) throw new Error("Ошибка загрузки модулей");
+
+				const data: module[] = await response.json();
+				setModules(data);
 			} catch (error) {
 				console.error("Ошибка:", error);
 			} finally {
@@ -136,15 +142,18 @@ export function CreateLesson() {
 							<option value="" disabled>
 								{loading ? "Загрузка модулей..." : "Выберите модуль"}
 							</option>
-							{modules.map((module) => (
-								<option
-									key={module.id}
-									value={module.id}
-									disabled={!!selectedOption1} // Блокируем, если выбран модуль в левой части
-								>
-									{module.name}
-								</option>
-							))}
+							{courses.map(
+									(courses) =>
+										!courses.with_modules && (
+											<option
+												key={courses.id}
+												value={courses.id}
+												disabled={!!selectedOption1} // Блокируем, если выбран модуль в правой части
+											>
+												{courses.name}
+											</option>
+										)
+								)}
 						</select>
 					</div>
 				</div>
