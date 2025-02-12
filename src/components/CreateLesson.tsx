@@ -21,12 +21,6 @@ export function CreateLesson() {
 
 				const data: course[] = await response.json();
 				setCourses(data);
-
-				const response = await fetchWithAuth(`${host}/admin/modules`);
-				if (!response.ok) throw new Error("Ошибка загрузки модулей");
-
-				const data: module[] = await response.json();
-				setModules(data);
 			} catch (error) {
 				console.error("Ошибка:", error);
 			} finally {
@@ -38,18 +32,29 @@ export function CreateLesson() {
 	}, []);
 
 	// Функции для обработки выбора
-	const handleSelect1 = (e: React.ChangeEvent<HTMLSelectElement>) => {
-		setSelectedOption1(e.target.value);
-		if (e.target.value) {
-			setSelectedOption2(""); // сбрасываем выбор во втором select
+	const handleSelect1 = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const selectedCourseId = e.target.value;
+		setSelectedOption1(selectedCourseId);
+		setSelectedOption2(""); // Сбрасываем второй select
+
+		try {
+			setLoading(true);
+			const host = process.env.NEXT_PUBLIC_APP_HOSTNAME;
+			const modulesRes = await fetchWithAuth(
+				`${host}/admin/modules?course_id=${selectedCourseId}`
+			);
+			if (!modulesRes.ok) throw new Error("Ошибка загрузки модулей");
+			const modulesData = await modulesRes.json();
+			setModules(modulesData);
+		} catch (error) {
+			console.error("Ошибка при загрузке модулей:", error);
+		} finally {
+			setLoading(false);
 		}
 	};
 
 	const handleSelect2 = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setSelectedOption2(e.target.value);
-		if (e.target.value) {
-			setSelectedOption1(""); // сбрасываем выбор в первом select
-		}
 	};
 
 	return (
@@ -73,19 +78,16 @@ export function CreateLesson() {
 								value={selectedOption1}
 								onChange={handleSelect1}
 								className="mt-1 block w-[22rem] rounded-md py-1 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
+								disabled={!!selectedOption2} // Блокируем, если выбрали курс без модуля
 							>
 								<option value="" disabled>
-									{loading ? "Загрузка модулей..." : "Выберите модуль"}
+									{loading ? "Загрузка курсов..." : "Выберите курс"}
 								</option>
 								{courses.map(
-									(courses) =>
-										courses.with_modules && (
-											<option
-												key={courses.id}
-												value={courses.id}
-												disabled={!!selectedOption2} // Блокируем, если выбран модуль в правой части
-											>
-												{courses.name}
+									(course) =>
+										course.with_modules && (
+											<option key={course.id} value={course.id}>
+												{course.name}
 											</option>
 										)
 								)}
@@ -93,29 +95,26 @@ export function CreateLesson() {
 						</div>
 						<div>
 							<label
-								htmlFor="module1"
+								htmlFor="module2"
 								className="block text-gray-800 font-semibold text-md"
 							>
 								Выберите модуль
 							</label>
 							<select
-								id="module1"
-								value={selectedOption1}
-								onChange={handleSelect1}
+								id="module2"
+								value={selectedOption2}
+								onChange={handleSelect2} // Теперь тут правильная функция
 								className="mt-1 block w-[22rem] rounded-md py-1 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
 							>
 								<option value="" disabled>
 									{loading ? "Загрузка модулей..." : "Выберите модуль"}
 								</option>
-								{modules.map((module) => (
-									<option
-										key={module.id}
-										value={module.id}
-										disabled={!!selectedOption2} // Блокируем, если выбран модуль в правой части
-									>
-										{module.name}
-									</option>
-								))}
+								{modules != null &&
+									modules.map((module) => (
+										<option key={module.id} value={module.id}>
+											{module.name}
+										</option>
+									))}
 							</select>
 						</div>
 					</div>
@@ -138,22 +137,19 @@ export function CreateLesson() {
 							value={selectedOption2}
 							onChange={handleSelect2}
 							className="mt-1 block 2lg:w-[40rem] w-[20rem] rounded-md py-1 px-3 ring-1 ring-inset ring-gray-400 text-black bg-white"
+							disabled={!!selectedOption1} // Блокируем, если выбрали курс с модулем
 						>
 							<option value="" disabled>
-								{loading ? "Загрузка модулей..." : "Выберите модуль"}
+								{loading ? "Загрузка курсов..." : "Выберите курс"}
 							</option>
 							{courses.map(
-									(courses) =>
-										!courses.with_modules && (
-											<option
-												key={courses.id}
-												value={courses.id}
-												disabled={!!selectedOption1} // Блокируем, если выбран модуль в правой части
-											>
-												{courses.name}
-											</option>
-										)
-								)}
+								(course) =>
+									!course.with_modules && (
+										<option key={course.id} value={course.id}>
+											{course.name}
+										</option>
+									)
+							)}
 						</select>
 					</div>
 				</div>

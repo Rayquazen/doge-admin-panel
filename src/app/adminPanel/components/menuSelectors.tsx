@@ -6,6 +6,7 @@ import { CreateModule } from "@/components/CreateModule";
 import { CreateLesson } from "@/components/CreateLesson";
 import { Tab } from "@/utils/types";
 import { ListAllContent } from "@/components/ListAllContent";
+import { ShowCourses } from "./ShowCourses";
 
 interface MenuSelectionsProps {
 	onComponentSelect: (component: JSX.Element) => void;
@@ -22,16 +23,27 @@ export default function MenuSelections({
 	};
 
 	return (
-		<nav className="flex flex-col space-y-2 gap-10 font-bold">
-			<button
-				onClick={() => handleSelect(<CreateCourse />, "Создать курс")}
-				className={` flex justify-center p-3  rounded text-black font-mono text-lg  ${
-					activeSection === "Создать курс" ? "bg-[#A79277] " : "bg-[#D1BB9E]"
-				}`}
-			>
-				Создать курс
-			</button>
-
+		<nav className="flex flex-col gap-10 font-bold">
+			<div className="flex flex-col gap-5 font-bold border-2 border-[#EAD8C0] border-y-[#8D7B68] border-dashed p-1">
+				<button
+					onClick={() => handleSelect(<CreateCourse />, "Создать курс")}
+					className={` flex justify-center p-3  rounded text-black font-mono text-lg  ${
+						activeSection === "Создать курс" ? "bg-[#A79277] " : "bg-[#D1BB9E]"
+					}`}
+				>
+					Создать курс
+				</button>
+				<button
+					onClick={() => handleSelect(<ShowCourses />, "Показать все курсы")}
+					className={` flex justify-center p-3  rounded text-black font-mono text-lg  ${
+						activeSection === "Показать все курсы"
+							? "bg-[#A79277] "
+							: "bg-[#D1BB9E]"
+					}`}
+				>
+					Показать все курсы
+				</button>
+			</div>
 			<button
 				onClick={() => handleSelect(<CreateModule />, "Создать модуль")}
 				className={` flex justify-center p-3  rounded text-black font-mono text-lg ${
