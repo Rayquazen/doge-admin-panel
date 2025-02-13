@@ -2,7 +2,7 @@
 
 import { JSX, useState } from "react";
 import MenuSelections from "./components/menuSelectors";
-import { CreateCourse } from "@/components/CreateCourse";
+import { CreateCourse } from "@/app/adminPanel/components/CreateCourse";
 
 export function Workspace() {
 	const [selectedComponent, setSelectedComponent] = useState<JSX.Element>(

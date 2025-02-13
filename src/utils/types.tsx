@@ -8,8 +8,7 @@ export type Tab =
 	| "Создать модуль"
 	| "Показать все модули"
 	| "Создать урок"
-	| "Показать все уроки"
-	| "Список всех материалов";
+	| "Показать все уроки";
 
 // Объект получаемых модулей
 export interface module {
@@ -17,6 +16,7 @@ export interface module {
 	name: string;
 	course_id: number;
 	description: string;
+	course_name: string;
 }
 // Объект получаемых курсов
 export interface course {

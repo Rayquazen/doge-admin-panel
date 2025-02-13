@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LessonConstructor } from "./LessonConstructor";
+import { LessonConstructor } from "@/components/LessonConstructor";
 import { module, course } from "@/utils/types";
 import { fetchWithAuth } from "@/utils/authService";
 
@@ -41,7 +41,7 @@ export function CreateLesson() {
 			setLoading(true);
 			const host = process.env.NEXT_PUBLIC_APP_HOSTNAME;
 			const modulesRes = await fetchWithAuth(
-				`${host}/admin/modules?course_id=${selectedCourseId}`
+				`${host}/admin/modulesByCourse?course_id=${selectedCourseId}`
 			);
 			if (!modulesRes.ok) throw new Error("Ошибка загрузки модулей");
 			const modulesData = await modulesRes.json();
