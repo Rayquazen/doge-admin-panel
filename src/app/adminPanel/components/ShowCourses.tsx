@@ -57,7 +57,7 @@ export function ShowCourses({}: Props) {
 							Открыть
 						</button>
 					</div>
-					<div className="flex flex-row text-black items-center w-full divide-x-2 divide-dashed divide-gray-500">
+					<div className="flex flex-row text-black items-center w-full divide-x divide divide-gray-500">
 						<div className="w-2/5 flex justify-center text-center">
 							{courses.name}
 						</div>
