@@ -4,6 +4,7 @@ import { VideoUploader } from "./VideoUploader";
 import { TextEditor } from "./TextEditor";
 import { EditorState } from "draft-js";
 import { useState } from "react";
+import { fetchWithAuth } from "@/utils/authService";
 
 import { arrayMove } from "@dnd-kit/sortable";
 
@@ -11,6 +12,7 @@ import type { ContentBlock, ContentType } from "@/utils/types";
 
 export function LessonConstructor() {
 	const [content, setContent] = useState<ContentBlock[]>([]);
+	const [lessonTitle, setLessonTitle] = useState("");
 
 	const addContent = (type: ContentType) => {
 		const newBlock: ContentBlock = {
@@ -37,6 +39,126 @@ export function LessonConstructor() {
 		setContent(arrayMove(content, index, newIndex));
 	};
 
+	// Обработчик кнопки создания курса
+	const saveLesson = async () => {
+		if (!lessonTitle.trim()) {
+			alert("Введите название урока!");
+			return;
+		}
+
+		{
+			/* формирование данных */
+		}
+		const lessonData = await Promise.all(
+			content.map(async (block, index) => {
+				if (block.type === "text") {
+					return {
+						type: block.type,
+						content: block.editorState?.getCurrentContent().getPlainText(),
+					};
+				} else {
+					const fileUrl = await uploadMediaPlaceholder(block.type);
+					return { type: block.type, content: fileUrl };
+				}
+			})
+		);
+
+		await sendLessonToServer({ title: lessonTitle, content: lessonData });
+
+		console.log("Урок сохранен!", { title: lessonTitle, content: lessonData });
+
+		// Очистка полей формы
+		setContent([]);
+		setLessonTitle("");
+
+		alert("Урок создан");
+	};
+
+	// Заглушка API-запроса для загрузки медиа (замени на реальный API)
+	const uploadMediaPlaceholder = async (type: ContentType) => {
+		console.log(`Загрузка ${type}...`);
+
+		return new Promise<string>((resolve) =>
+			setTimeout(() => {
+				const fileUrl = `/uploads/${type}_${crypto.randomUUID()}.mp4`;
+				console.log(`Файл загружен: ${fileUrl}`);
+				resolve(fileUrl);
+			}, 1000)
+		);
+	};
+
+	// Заглушка API-запроса для сохранения урока
+	const sendLessonToServer = async (lesson: {
+		title: string;
+		content: any;
+	}) => {
+		console.log("Отправка данных на сервер...", lesson);
+
+		return new Promise<void>((resolve) =>
+			setTimeout(() => {
+				console.log("Урок успешно сохранен!");
+				resolve();
+			}, 500)
+		);
+	};
+
+	{
+		/* Раскомментируй что ниже, это именно рабочий запрос , не заглушка на конвертировкание + записывание файла в бд  */
+	}
+
+	// const uploadMedia = async (type: ContentType) => {
+	// 	try {
+	// 		const host = process.env.NEXT_PUBLIC_APP_HOSTNAME;
+	//
+	// 		const response = await fetchWithAuth(`${host}/admin/mediaurl`, {
+	// 			method: "POST",
+	// 			headers: { "Content-Type": "application/json" },
+	// 			body: JSON.stringify({ type }), // Исправлено
+	// 		});
+
+	// 		if (!response.ok) {
+	// 			const errorText = await response.text();
+	// 			throw new Error(`Ошибка загрузки медиа: ${errorText}`);
+	// 		}
+
+	// 		const data = await response.json();
+	// 		if (!data?.url) throw new Error("Сервер не вернул URL файла");
+
+	// 		return data.url;
+	// 	} catch (error) {
+	// 		console.error("Ошибка загрузки медиа:", error);
+	// 		throw error;
+	// 	}
+	// };
+
+	{
+		/* Раскомментируй что ниже, это именно рабочий запрос , не заглушка на записывание всего урока файла в бд  */
+	}
+
+	// const sendLessonToServer = async (lesson: {
+	// 	title: string;
+	// 	content: any;
+	// }) => {
+	// 	try {
+	// 		const host = process.env.NEXT_PUBLIC_APP_HOSTNAME;
+	// 		const response = await fetchWithAuth(`${host}/admin/lesson`, {
+	// 			method: "POST",
+	// 			headers: { "Content-Type": "application/json" },
+	// 			body: JSON.stringify(lesson),
+	// 		});
+
+	// 		if (!response.ok) {
+	// 			const errorText = await response.text();
+	// 			throw new Error(`Ошибка сохранения урока: ${errorText}`);
+	// 		}
+
+	// 		console.log("Урок успешно сохранен:", lesson);
+	// 	} catch (error) {
+	// 		console.error("Ошибка сохранения урока:", error);
+	// 		throw error;
+	// 	}
+	// };
+
 	return (
 		<div className="w-full h-5/6 rounded flex flex-col items-center ">
 			<div className="w-full  flex flex-row justify-between items-center">
@@ -47,10 +169,13 @@ export function LessonConstructor() {
 					>
 						Название Урока
 					</label>
+
 					<input
 						type="text"
 						id="lessonName"
 						className="block w-5/6 rounded-md py-1.5 px-2 ring-1 ring-inset ring-gray-400 text-black"
+						value={lessonTitle}
+						onChange={(e) => setLessonTitle(e.target.value)}
 					/>
 				</div>
 				<div className="min-h-[4rem] w-1/2 flex flex-row justify-center items-center gap-5">
@@ -123,7 +248,10 @@ export function LessonConstructor() {
 				))}
 				{content.length > 0 && (
 					<div className="w-full flex justify-center gap-20 mt-5">
-						<button className="w-2/6 rounded bg-[#A79277] text-black p-2 font-bold hover:bg-[#D1BB9E]">
+						<button
+							className="w-2/6 rounded bg-[#A79277] text-black p-2 font-bold hover:bg-[#D1BB9E]"
+							onClick={saveLesson}
+						>
 							Сохранить Урок
 						</button>
 						<button className="w-2/6 rounded bg-[#A79277] text-black p-2 font-bold hover:bg-[#D1BB9E]">

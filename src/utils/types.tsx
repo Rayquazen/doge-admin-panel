@@ -2,6 +2,10 @@ import { EditorState } from "draft-js";
 
 export type ContentType = "text" | "image" | "video";
 
+export interface MediaUrl {
+	url: string;
+}
+
 export type Tab =
 	| "Создать курс"
 	| "Показать все курсы"
